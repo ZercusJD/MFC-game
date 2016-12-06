@@ -18,6 +18,8 @@ CChildView::CChildView()
 
 	myPlane = new Plane;//128*88
 	myPlane->LoadImageW();
+
+	MyBullet::LoadImageW();
 }
 
 CChildView::~CChildView()
@@ -45,6 +47,7 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 	cs.style &= ~WS_BORDER;
 	cs.lpszClass = AfxRegisterWndClass(CS_HREDRAW|CS_VREDRAW|CS_DBLCLKS, 
 		::LoadCursor(NULL, IDC_ARROW), reinterpret_cast<HBRUSH>(COLOR_WINDOW+1), NULL);
+
 
 	return TRUE;
 }
@@ -76,17 +79,26 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 	m_cacheDC.CreateCompatibleDC(NULL);
 	m_cacheDC.SelectObject(m_cacheCBitmap);
 
-	myPlane->Draw(/*cDC*/&m_cacheDC, TRUE);
-	cDC->BitBlt(0, 0, m_client.Width(), m_client.Height(), &m_cacheDC, 0, 0, SRCCOPY);//加入绘制的代码
-	
-	/*if (GetKeyState(0x57))
-		myPlane->SetPoint(myPlane->GetPoint().x , myPlane->GetPoint().y-10);
-	else if (GetKeyState(0x53))
-		myPlane->SetPoint(myPlane->GetPoint().x, myPlane->GetPoint().y + 10);
-	else if (GetKeyState(0x41))
-		myPlane->SetPoint(myPlane->GetPoint().x-10, myPlane->GetPoint().y);
-	else if (GetKeyState(0x44))
-		myPlane->SetPoint(myPlane->GetPoint().x+10, myPlane->GetPoint().y);*/
+	if (myPlane!=NULL)
+	    myPlane->Draw(/*cDC*/&m_cacheDC, TRUE);
+
+	/***************************************控制飞机移动*******************************/
+	if (GetKeyState('W')<0)
+		myPlane->SetPoint(myPlane->GetPoint().x , myPlane->GetPoint().y-20);
+	if (GetKeyState('S')<0)
+		myPlane->SetPoint(myPlane->GetPoint().x, myPlane->GetPoint().y + 20);
+	if (GetKeyState('A')<0)
+		myPlane->SetPoint(myPlane->GetPoint().x-20, myPlane->GetPoint().y);
+	if (GetKeyState('D')<0)
+		myPlane->SetPoint(myPlane->GetPoint().x+20, myPlane->GetPoint().y);
+
+	/************************************空格控制子弹发射*************************************/
+	if (GetKeyState(VK_SPACE) < 0)
+	{
+		MyBullet *bullet = new MyBullet(myPlane->GetPoint().x, myPlane->GetPoint().y);
+		bullet->Draw(&m_cacheDC, TRUE);
+		myBulletList.AddTail(bullet);
+	}
 
 	switch (nIDEvent)
 	{
@@ -95,6 +107,8 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 		break;
 	}
 	}
+
+	cDC->BitBlt(0, 0, m_client.Width(), m_client.Height(), &m_cacheDC, 0, 0, SRCCOPY);//加入绘制的代码
 
 	m_cacheCBitmap.DeleteObject();
 	m_cacheDC.DeleteDC();//释放缓冲DC

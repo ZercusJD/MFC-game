@@ -6,6 +6,7 @@
 #pragma once
 #include"Object.h"
 #include"Plane.h"
+#include"MyBullet.h"
 
 // CChildView 窗口
 
@@ -22,8 +23,12 @@ public:
 	CDC *cDC;
 	CBitmap m_cacheCBitmap;//缓冲位图
 
-	/*创建各个游戏对象*/
+	/*创建游戏对象*/
 	Plane *myPlane;
+	MyBullet *myBullet;
+
+	/*对象链表*/
+	CObList myBulletList;
 
 // 操作
 public:

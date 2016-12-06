@@ -18,8 +18,9 @@ public:
 // 特性
 public:
 	CRect m_client;
-	CBitmap m_bgBitmap; //背景位图对象
-	CDC m_bgcDC;       //背景DC
+
+	CDC *cDC;
+	CBitmap m_cacheCBitmap;//缓冲位图
 
 	/*创建各个游戏对象*/
 	Plane *myPlane;
@@ -41,5 +42,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 };
 

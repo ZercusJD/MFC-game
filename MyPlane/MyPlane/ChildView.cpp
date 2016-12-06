@@ -15,6 +15,7 @@
 
 CChildView::CChildView()
 {
+
 	myPlane = new Plane;//128*88
 	myPlane->LoadImageW();
 }
@@ -27,6 +28,8 @@ CChildView::~CChildView()
 BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_PAINT()
 	ON_WM_TIMER()
+	ON_WM_MOUSEMOVE()
+	ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 
@@ -49,16 +52,14 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 void CChildView::OnPaint() 
 {
 	CPaintDC dc(this); // 用于绘制的设备上下文
-	
+ 
 	// TODO:  在此处添加消息处理程序代码
-	//创建兼容的DC
-	m_bgcDC.CreateCompatibleDC(NULL);
-	//从资源中加载位图
-	m_bgBitmap.LoadBitmap(IDB_BITMAP2);
-	//选择位图对象
-	m_bgcDC.SelectObject(&m_bgBitmap);
 
 	SetTimer(1,100,NULL);
+
+	//在绘制完图后,使窗口区有效  
+	ValidateRect(&m_client);
+	
 	// 不要为绘制消息而调用 CWnd::OnPaint()
 }
 
@@ -67,20 +68,53 @@ void CChildView::OnPaint()
 void CChildView::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO:  在此添加消息处理程序代码和/或调用默认值
+	cDC = this->GetDC();   //获得当前窗口的DC     
+	GetClientRect(&m_client);   //获得窗口的尺寸 
+
+	m_cacheCBitmap.LoadBitmap(IDB_BITMAP2);
+	CDC m_cacheDC;//cache cdc
+	m_cacheDC.CreateCompatibleDC(NULL);
+	m_cacheDC.SelectObject(m_cacheCBitmap);
+
+	myPlane->Draw(/*cDC*/&m_cacheDC, TRUE);
+	cDC->BitBlt(0, 0, m_client.Width(), m_client.Height(), &m_cacheDC, 0, 0, SRCCOPY);//加入绘制的代码
+	
+	/*if (GetKeyState(0x57))
+		myPlane->SetPoint(myPlane->GetPoint().x , myPlane->GetPoint().y-10);
+	else if (GetKeyState(0x53))
+		myPlane->SetPoint(myPlane->GetPoint().x, myPlane->GetPoint().y + 10);
+	else if (GetKeyState(0x41))
+		myPlane->SetPoint(myPlane->GetPoint().x-10, myPlane->GetPoint().y);
+	else if (GetKeyState(0x44))
+		myPlane->SetPoint(myPlane->GetPoint().x+10, myPlane->GetPoint().y);*/
+
 	switch (nIDEvent)
 	{
 	case 1:{
-		CDC *cDC = this->GetDC();   //获得当前窗口的DC     
-		GetClientRect(&m_client);   //获得窗口的尺寸  
-		cDC->BitBlt(0, 0, m_client.Width(), m_client.Height(), &m_bgcDC, 0, 0, SRCCOPY);//加入绘制的代码
-
-		myPlane->Draw(cDC, TRUE);
-		if (myPlane->GetPoint().x<600)
-			myPlane->SetPoint(myPlane->GetPoint().x+10,myPlane->GetPoint().y);
-
-		ReleaseDC(cDC);//释放DC  
+		
 		break;
 	}
 	}
+
+	m_cacheCBitmap.DeleteObject();
+	m_cacheDC.DeleteDC();//释放缓冲DC
+	ReleaseDC(cDC);//释放DC  
+
 	CWnd::OnTimer(nIDEvent);
+}
+
+
+void CChildView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	// TODO:  在此添加消息处理程序代码和/或调用默认值
+	myPlane->SetPoint(point.x, point.y);
+	CWnd::OnMouseMove(nFlags, point);
+}
+
+
+void CChildView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO:  在此添加消息处理程序代码和/或调用默认值
+
+	CWnd::OnLButtonDown(nFlags, point);
 }

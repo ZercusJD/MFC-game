@@ -4,8 +4,8 @@
 
 Plane::Plane()
 {
-	objPos.x = 280;
-	objPos.y = 700;
+	objPos.x = 1277/2-PLANE_WIDTH/2;
+	objPos.y = 719-PLANE_HEIGHT-10;
 }
 
 
@@ -21,7 +21,6 @@ BOOL Plane::Draw(CDC *pDC, BOOL bPause)
 
 BOOL Plane::LoadImageW()
 {
-	//return Object::LoadImage(m_Images, IDB_BITMAP3, RGB(0, 0, 0), 50, 60, 1);
 	CBitmap bmp;
 	if (!bmp.LoadBitmap(IDB_BITMAP3))
 		return FALSE;

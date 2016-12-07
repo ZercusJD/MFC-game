@@ -7,6 +7,8 @@
 #include"Object.h"
 #include"Plane.h"
 #include"MyBullet.h"
+#include"Enemy.h"
+#include"EnemyBullet.h"
 
 // CChildView 窗口
 
@@ -19,16 +21,20 @@ public:
 // 特性
 public:
 	CRect m_client;
-
 	CDC *cDC;
 	CBitmap m_cacheCBitmap;//缓冲位图
 
 	/*创建游戏对象*/
 	Plane *myPlane;
-	MyBullet *myBullet;
 
 	/*对象链表*/
 	CObList myBulletList;
+	CObList enemyList;
+	CObList enemyBulletList;
+
+	int mySpeed;
+	int enemySpeed;
+	int bulletSpeed;
 
 // 操作
 public:

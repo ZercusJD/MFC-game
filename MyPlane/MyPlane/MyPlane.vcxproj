@@ -102,6 +102,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChildView.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyBullet.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MyBullet.h" />
     <ClInclude Include="MyPlane.h" />
@@ -113,6 +115,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChildView.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyBullet.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MyBullet.cpp" />
     <ClCompile Include="MyPlane.cpp" />
@@ -132,7 +136,12 @@
   <ItemGroup>
     <Image Include="..\..\image\background3.bmp" />
     <Image Include="..\..\image\background3_2.bmp" />
+    <Image Include="..\..\image\enemy1.bmp" />
+    <Image Include="..\..\image\enemy2.bmp" />
+    <Image Include="..\..\image\enemy3.bmp" />
+    <Image Include="..\..\image\galaxy.bmp" />
     <Image Include="..\..\image\mybullet1.bmp" />
+    <Image Include="..\..\image\mybullet2_30x30.bmp" />
     <Image Include="..\..\image\myplane1.bmp" />
     <Image Include="res\MyPlane.ico" />
     <Image Include="res\Toolbar.bmp" />

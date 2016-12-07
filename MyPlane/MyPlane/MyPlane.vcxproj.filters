@@ -45,6 +45,12 @@
     <ClInclude Include="MyBullet.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBullet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyPlane.cpp">
@@ -68,6 +74,12 @@
     <ClCompile Include="MyBullet.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBullet.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MyPlane.rc">
@@ -86,9 +98,6 @@
     <Image Include="res\Toolbar.bmp">
       <Filter>资源文件</Filter>
     </Image>
-    <Image Include="..\..\image\background3_2.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
     <Image Include="..\..\image\myplane1.bmp">
       <Filter>资源文件</Filter>
     </Image>
@@ -96,6 +105,24 @@
       <Filter>资源文件</Filter>
     </Image>
     <Image Include="..\..\image\background3.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\image\mybullet2_30x30.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\image\enemy1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\image\enemy3.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\image\galaxy.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\image\background3_2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\image\enemy2.bmp">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>

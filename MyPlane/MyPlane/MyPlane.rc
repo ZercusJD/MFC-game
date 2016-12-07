@@ -80,6 +80,11 @@ IDB_BITMAP1             BITMAP                  "D:\\Github\\MFC-game\\image\\ba
 IDB_BITMAP2             BITMAP                  "D:\\Github\\MFC-game\\image\\background3_2.bmp"
 IDB_BITMAP3             BITMAP                  "D:\\Github\\MFC-game\\image\\myplane1.bmp"
 IDB_BITMAP4             BITMAP                  "D:\\Github\\MFC-game\\image\\mybullet1.bmp"
+IDB_BITMAP5             BITMAP                  "D:\\Github\\MFC-game\\image\\mybullet2_30x30.bmp"
+IDB_BITMAP6             BITMAP                  "D:\\Github\\MFC-game\\image\\enemy1.bmp"
+IDB_BITMAP7             BITMAP                  "D:\\Github\\MFC-game\\image\\enemy2.bmp"
+IDB_BITMAP8             BITMAP                  "D:\\Github\\MFC-game\\image\\enemy3.bmp"
+IDB_BITMAP9             BITMAP                  "D:\\Github\\MFC-game\\image\\galaxy.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //

@@ -36,6 +36,8 @@ public:
 	int enemySpeed;
 	int bulletSpeed;
 
+	BOOL start = TRUE;
+
 // ²Ù×÷
 public:
 

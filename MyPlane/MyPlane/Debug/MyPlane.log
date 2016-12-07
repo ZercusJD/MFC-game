@@ -1,4 +1,4 @@
-﻿生成启动时间为 2016/12/7 星期三 下午 21:46:29。
+﻿生成启动时间为 2016/12/7 星期三 下午 23:33:15。
      1>项目“D:\Github\MFC-game\MyPlane\MyPlane\MyPlane.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          D:\应用软件\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\MyPlane.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ChildView.cpp
@@ -19,4 +19,4 @@
 
 生成成功。
 
-已用时间 00:00:55.57
+已用时间 00:00:36.77

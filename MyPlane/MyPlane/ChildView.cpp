@@ -59,10 +59,10 @@ void CChildView::OnPaint()
  
 	// TODO:  在此处添加消息处理程序代码
 
-	SetTimer(1,80,NULL);//界面刷新
-	SetTimer(2, 2000, NULL);//敌机出现
-	SetTimer(3, 1000, NULL);//敌机发射子弹
-	SetTimer(0, 600, NULL);
+	SetTimer(1,70,NULL);//界面刷新
+	SetTimer(2, 600, NULL);//敌机出现
+	SetTimer(3, 700, NULL);//敌机发射子弹
+	//SetTimer(0, 600, NULL);
 
 	//在绘制完图后,使窗口区有效  
 	ValidateRect(&m_client);
@@ -90,13 +90,13 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 	{
 		/***************************************wasd控制我方飞机移动*******************************/
 		if (GetKeyState('W') < 0)
-			myPlane->SetPoint(myPlane->GetPoint().x, myPlane->GetPoint().y - 20);
+			myPlane->SetPoint(myPlane->GetPoint().x, myPlane->GetPoint().y - 30);
 		if (GetKeyState('S') < 0)
-			myPlane->SetPoint(myPlane->GetPoint().x, myPlane->GetPoint().y + 20);
+			myPlane->SetPoint(myPlane->GetPoint().x, myPlane->GetPoint().y + 30);
 		if (GetKeyState('A') < 0)
-			myPlane->SetPoint(myPlane->GetPoint().x - 20, myPlane->GetPoint().y);
+			myPlane->SetPoint(myPlane->GetPoint().x - 30, myPlane->GetPoint().y);
 		if (GetKeyState('D') < 0)
-			myPlane->SetPoint(myPlane->GetPoint().x + 20, myPlane->GetPoint().y);
+			myPlane->SetPoint(myPlane->GetPoint().x + 30, myPlane->GetPoint().y);
 
 		/************************************空格控制我方子弹发射*************************************/
 		if (GetKeyState(VK_SPACE) < 0)
@@ -106,6 +106,7 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 			myBulletList.AddTail(bullet);
 		}
 	}
+
 		/*****************************************敌机出现*******************************************/
 		if (nIDEvent == 2)
 		{
@@ -157,7 +158,7 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 				&&bullet->GetPoint().y < m_client.bottom
 				&&bullet->GetPoint().y > m_client.top)
 			{
-				bullet->SetPoint(bullet->GetPoint().x, bullet->GetPoint().y - bullet->PLANE_HEIGHT);
+				bullet->SetPoint(bullet->GetPoint().x, bullet->GetPoint().y - (bullet->PLANE_HEIGHT));
 				bullet->Draw(&m_cacheDC, TRUE);
 			}
 			else{
@@ -183,10 +184,11 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 			else{
 				enemyBulletList.RemoveAt(tmp);
 				delete bullet;
+				break;
 			}
 		}
 
-		/************************************碰撞检测******************************************/
+	/************************************碰撞检测******************************************/
 	if (myPlane != NULL)
 	{
 		/*飞机相撞坠毁*/
@@ -203,9 +205,10 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 				//delete myPlane;
 				enemyList.RemoveAt(tmp);
 				start = FALSE;
+				break;
 			}
 		}
-		
+
 		/*敌机击中我方*/
 		POSITION pos5 = enemyBulletList.GetHeadPosition();
 		while (pos5 != NULL)
@@ -220,36 +223,42 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 				enemyBulletList.RemoveAt(tmp);
 				//delete myPlane;
 				start = FALSE;
+				break;
 			}
 		}
 	}
 
 	/*击中敌机*/
-	POSITION pos4 = enemyList.GetHeadPosition();
+	POSITION pos4 = myBulletList.GetHeadPosition();
 	while (pos4 != NULL)
 	{
 		POSITION tmp1 = pos4;
-		Enemy*enemy = (Enemy*)enemyList.GetNext(pos4);
-		POSITION pos_my_bullet = myBulletList.GetHeadPosition();
-		while (pos_my_bullet != NULL){
-			POSITION tmp2 = pos_my_bullet;
-			MyBullet *bullet = (MyBullet*)myBulletList.GetNext(pos_my_bullet);
+		MyBullet *bullet = (MyBullet*)myBulletList.GetNext(pos4);
+
+		POSITION enemy_pos = enemyList.GetHeadPosition();
+		while (enemy_pos != NULL)
+		{
+			POSITION tmp2 = enemy_pos;
+			Enemy *enemy = (Enemy*)enemyList.GetNext(enemy_pos);
 			CRect r1 = enemy->GetRect();
 			CRect r2 = bullet->GetRect();
 			CRect t;
 			if (t.IntersectRect(&r1, &r2))
 			{
-				enemyList.RemoveAt(tmp1);
-				myBulletList.RemoveAt(tmp2);
+				enemyList.RemoveAt(tmp2);
+				myBulletList.RemoveAt(tmp1);
+				delete bullet;
+				delete enemy;
 			}
+			break;
 		}
-	}
-
+	}//Tips:外层循环必须是我方子弹
 
 	cDC->BitBlt(0, 0, m_client.Width(), m_client.Height(), &m_cacheDC, 0, 0, SRCCOPY);//加入绘制的代码
 
 	m_cacheCBitmap.DeleteObject();//释放缓冲位图
 	m_cacheDC.DeleteDC();//释放缓冲DC
+	ReleaseDC(&m_cacheDC);
 	ReleaseDC(cDC);//释放DC  
 
 	CWnd::OnTimer(nIDEvent);
@@ -259,7 +268,7 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 void CChildView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO:  在此添加消息处理程序代码和/或调用默认值
-	//myPlane->SetPoint(point.x, point.y);
+	myPlane->SetPoint(point.x, point.y);
 	CWnd::OnMouseMove(nFlags, point);
 }
 
@@ -267,6 +276,8 @@ void CChildView::OnMouseMove(UINT nFlags, CPoint point)
 void CChildView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO:  在此添加消息处理程序代码和/或调用默认值
-
+	MyBullet *bullet = new MyBullet(myPlane->GetPoint().x, myPlane->GetPoint().y);
+	//bullet->Draw(&m_cacheDC, TRUE);
+	myBulletList.AddTail(bullet);
 	CWnd::OnLButtonDown(nFlags, point);
 }

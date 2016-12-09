@@ -18,7 +18,7 @@ public:
 	/*得到战机所在的矩形区域*/
 	CRect GetRect()
 	{
-		return CRect(objPos, CPoint(objPos.x + PLANE_WIDTH, objPos.y + PLANE_HEIGHT));
+		return CRect(CPoint(objPos.x,objPos.y), CPoint(objPos.x + PLANE_WIDTH, objPos.y + PLANE_HEIGHT));
 	}
 
 private:

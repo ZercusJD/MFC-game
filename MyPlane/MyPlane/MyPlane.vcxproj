@@ -143,6 +143,7 @@
     <Image Include="..\..\image\mybullet1.bmp" />
     <Image Include="..\..\image\mybullet2_30x30.bmp" />
     <Image Include="..\..\image\myplane1.bmp" />
+    <Image Include="..\..\image\smallbullet.BMP" />
     <Image Include="res\MyPlane.ico" />
     <Image Include="res\Toolbar.bmp" />
   </ItemGroup>

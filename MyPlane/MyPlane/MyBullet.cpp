@@ -24,7 +24,7 @@ BOOL MyBullet::LoadImageW()
 {
 	//return Object::LoadImage(m_Images, IDB_BITMAP3, RGB(0, 0, 0), 50, 60, 1);
 	CBitmap bmp;
-	if (!bmp.LoadBitmap(IDB_BITMAP4))
+	if (!bmp.LoadBitmap(IDB_BITMAP4))//IDB_BITMAP10
 		return FALSE;
 
 	if (!m_Images.Create(17, 40, ILC_COLOR24 | ILC_MASK, 1, 0))//nInitial³õÊ¼¸öÊý

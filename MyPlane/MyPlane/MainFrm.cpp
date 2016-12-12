@@ -74,8 +74,8 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 	cs.dwExStyle &= ~WS_EX_CLIENTEDGE;
 	cs.lpszClass = AfxRegisterWndClass(0);
 
-	cs.cx = 1277;//设定窗口的额大小  
-	cs.cy = 719+50;
+	cs.cx = 1277+26;//设定窗口的额大小  
+	cs.cy = 719+60;
 	//cs.style &= ~WS_THICKFRAME;//使窗口不能用鼠标改变大小  
 	//cs.style &= ~WS_MAXIMIZEBOX; //禁止窗口最大化
 	return TRUE;

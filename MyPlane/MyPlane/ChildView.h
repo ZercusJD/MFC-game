@@ -9,6 +9,7 @@
 #include"MyBullet.h"
 #include"Enemy.h"
 #include"EnemyBullet.h"
+#include"Scene.h"
 
 // CChildView 窗口
 
@@ -23,6 +24,7 @@ public:
 	CRect m_client;
 	CDC *cDC;
 	CBitmap m_cacheCBitmap;//缓冲位图
+	int CTop,CBottom;
 
 	/*创建游戏对象*/
 	Plane *myPlane;

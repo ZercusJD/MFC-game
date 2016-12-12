@@ -13,7 +13,9 @@
 // CChildView
 
 CChildView::CChildView()
-{
+{ 
+	CTop = 0;
+	CBottom = 719;
 
 	myPlane = new Plane;//128*88
 	myPlane->LoadImageW();
@@ -60,12 +62,13 @@ void CChildView::OnPaint()
 	// TODO:  在此处添加消息处理程序代码
 
 	SetTimer(1,70,NULL);//界面刷新
-	SetTimer(2, 600, NULL);//敌机出现
-	SetTimer(3, 700, NULL);//敌机发射子弹
+	SetTimer(2, 800, NULL);//敌机出现以及发射子弹
+	SetTimer(3, 500, NULL);//背景移动
+
 	//SetTimer(0, 600, NULL);
 
 	//在绘制完图后,使窗口区有效  
-	ValidateRect(&m_client);
+	ValidateRect(m_client);
 	
 	// 不要为绘制消息而调用 CWnd::OnPaint()
 }
@@ -76,12 +79,25 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO:  在此添加消息处理程序代码和/或调用默认值
 	cDC = this->GetDC();   //获得当前窗口的DC     
-	GetClientRect(&m_client);   //获得窗口的尺寸 
+	GetClientRect(m_client);   //获得窗口的尺寸
+	//m_client.top = CTop;
+	//m_client.bottom = CBottom;
 
 	m_cacheCBitmap.LoadBitmap(IDB_BITMAP9);
 	CDC m_cacheDC;//cache cdc
 	m_cacheDC.CreateCompatibleDC(NULL);
 	m_cacheDC.SelectObject(m_cacheCBitmap);
+
+
+	CImage image;//滚动背景
+	image.Load(_T("./image/galaxy.bmp"));
+	int height = m_client.Height();
+	m_client.bottom =CBottom;
+	m_client.top = CTop;
+	image.StretchBlt(m_cacheDC, m_client, SRCCOPY);//绘制下端
+	m_client.bottom -= height;
+	m_client.top -= height;
+	image.StretchBlt(m_cacheDC, m_client, SRCCOPY);
 
 	if (myPlane != NULL)
 		myPlane->Draw(/*cDC*/&m_cacheDC, TRUE);
@@ -126,17 +142,17 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 			Enemy * enemy = (Enemy*)enemyList.GetNext(pos);//链表循环
 			if (enemy->GetPoint().x > m_client.left
 				&&enemy->GetPoint().x < m_client.right
-				&&enemy->GetPoint().y < m_client.bottom
-				&&enemy->GetPoint().y > m_client.top)
+				&&enemy->GetPoint().y < 719
+				&&enemy->GetPoint().y > 0)
 			{
 				if (enemy->enemyType == 0)
-					enemy->SetPoint(enemy->GetPoint().x, enemy->GetPoint().y + 10);
+					enemy->SetPoint(enemy->GetPoint().x, enemy->GetPoint().y + 20);
 				else
 					enemy->SetPoint(enemy->GetPoint().x, enemy->GetPoint().y + 20);
 				enemy->Draw(&m_cacheDC, TRUE);
 
 				/***************敌机发射子弹******************/
-				if (nIDEvent == 3)
+				if (nIDEvent == 2)
 				{
 					EnemyBullet *enemy_bullet = new EnemyBullet(enemy->GetPoint().x, enemy->GetPoint().y);
 					enemyBulletList.AddTail(enemy_bullet);
@@ -155,8 +171,8 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 			MyBullet * bullet = (MyBullet*)myBulletList.GetNext(pos1);//链表循环
 			if (bullet->GetPoint().x > m_client.left
 				&&bullet->GetPoint().x < m_client.right
-				&&bullet->GetPoint().y < m_client.bottom
-				&&bullet->GetPoint().y > m_client.top)
+				&&bullet->GetPoint().y < 719
+				&&bullet->GetPoint().y > 0)
 			{
 				bullet->SetPoint(bullet->GetPoint().x, bullet->GetPoint().y - (bullet->PLANE_HEIGHT));
 				bullet->Draw(&m_cacheDC, TRUE);
@@ -175,8 +191,8 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 			EnemyBullet * bullet = (EnemyBullet*)enemyBulletList.GetNext(pos2);//链表循环
 			if (bullet->GetPoint().x > m_client.left
 				&&bullet->GetPoint().x < m_client.right
-				&&bullet->GetPoint().y < m_client.bottom
-				&&bullet->GetPoint().y > m_client.top)
+				&&bullet->GetPoint().y < 719
+				&&bullet->GetPoint().y > 0)
 			{
 				bullet->SetPoint(bullet->GetPoint().x, bullet->GetPoint().y + bullet->PLANE_HEIGHT);
 				bullet->Draw(&m_cacheDC, TRUE);
@@ -256,6 +272,17 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 
 	cDC->BitBlt(0, 0, m_client.Width(), m_client.Height(), &m_cacheDC, 0, 0, SRCCOPY);//加入绘制的代码
 
+	/*背景坐标循环播放*/
+	if (CTop < 719)
+	{
+		CTop += 2;
+		CBottom += 2;
+	}
+	else
+	{
+		CTop = 0;
+		CBottom = 719;
+	}
 	m_cacheCBitmap.DeleteObject();//释放缓冲位图
 	m_cacheDC.DeleteDC();//释放缓冲DC
 	ReleaseDC(&m_cacheDC);

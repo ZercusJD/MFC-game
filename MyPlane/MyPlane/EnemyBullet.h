@@ -6,7 +6,7 @@ class EnemyBullet :
 public:
 	EnemyBullet(int x, int y);
 	~EnemyBullet();
-
+	int type;
 	static const int PLANE_WIDTH = 30;//设置敌机子弹的宽度
 	static const int PLANE_HEIGHT = 30;//设置敌机子弹的长度
 
@@ -22,5 +22,6 @@ public:
 
 private:
 	static CImageList m_Images;/*存储敌机子弹图片*/
+	static CImageList boss_Images;
 };
 

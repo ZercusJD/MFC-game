@@ -16,13 +16,14 @@ CChildView::CChildView()
 { 
 	CTop = 0;
 	CBottom = 719;
-
+	bossDirect = 1;
 	myPlane = new Plane;//128*88
 	myPlane->LoadImageW();
 
 	MyBullet::LoadImageW();
 	EnemyBullet::LoadImageW();
 	Enemy::LoadImageW();
+	Boss::LoadImageW();
 }
 
 CChildView::~CChildView()
@@ -64,6 +65,11 @@ void CChildView::OnPaint()
 	SetTimer(1,70,NULL);//界面刷新
 	SetTimer(2, 800, NULL);//敌机出现以及发射子弹
 	SetTimer(3, 500, NULL);//背景移动
+	SetTimer(4, 10000, NULL);//boss出现
+	SetTimer(5, 20000, NULL);//first stage
+	SetTimer(6, 15000, NULL);//boss move
+	SetTimer(7, 40000, NULL);//second stage
+	SetTimer(8, 300, NULL);//boss shoot
 
 	//SetTimer(0, 600, NULL);
 
@@ -123,6 +129,24 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 		}
 	}
 
+	if (nIDEvent == 4)
+	{ 
+		bossMode = TRUE;
+		Stage = 1;
+		KillTimer(4);
+	}
+	if (nIDEvent == 7)
+	{
+		bossMode = TRUE;
+		Stage = 2;
+		KillTimer(7);
+	}
+	if (nIDEvent == 6){
+		bossMove = TRUE;
+		KillTimer(6);
+	}
+	if (!bossMode)//不是boss模式
+	{
 		/*****************************************敌机出现*******************************************/
 		if (nIDEvent == 2)
 		{
@@ -133,7 +157,7 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 			//enemy->Draw(&m_cacheDC, TRUE);
 			enemyList.AddTail(enemy);
 		}
-
+	}
 		/******************************************敌机移动*******************************************/
 		POSITION pos = enemyList.GetHeadPosition();
 		while (pos != NULL)
@@ -143,7 +167,7 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 			if (enemy->GetPoint().x > m_client.left
 				&&enemy->GetPoint().x < m_client.right
 				&&enemy->GetPoint().y < 719
-				&&enemy->GetPoint().y > 0)
+				&& enemy->GetPoint().y > 0)
 			{
 				if (enemy->enemyType == 0)
 					enemy->SetPoint(enemy->GetPoint().x, enemy->GetPoint().y + 20);
@@ -154,7 +178,9 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 				/***************敌机发射子弹******************/
 				if (nIDEvent == 2)
 				{
-					EnemyBullet *enemy_bullet = new EnemyBullet(enemy->GetPoint().x, enemy->GetPoint().y);
+					EnemyBullet *enemy_bullet = new EnemyBullet(
+						enemy->GetPoint().x + 108 / 2 - 15,
+						enemy->GetPoint().y + 30);
 					enemyBulletList.AddTail(enemy_bullet);
 				}
 			}
@@ -265,10 +291,80 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 				myBulletList.RemoveAt(tmp1);
 				delete bullet;
 				delete enemy;
+				Score++;
 			}
 			break;
 		}
 	}//Tips:外层循环必须是我方子弹
+
+	if (bossMode)
+	{
+		if (boss==NULL)boss = new Boss(1277/2-180,0);
+		if (boss != NULL)
+		{
+			boss->Draw(&m_cacheDC, TRUE);
+			switch (Stage)
+			{
+			case 1:{
+				if (nIDEvent == 8)
+				{
+					EnemyBullet *bullet0 = new EnemyBullet(boss->GetPoint().x+20, boss->GetPoint().y+230);
+					EnemyBullet *bullet1 = new EnemyBullet(boss->GetPoint().x + 100, boss->GetPoint().y + 230);
+					EnemyBullet *bullet2 = new EnemyBullet(boss->GetPoint().x + 165, boss->GetPoint().y + 230);
+					EnemyBullet *bullet3 = new EnemyBullet(boss->GetPoint().x + 220, boss->GetPoint().y + 230);
+					EnemyBullet *bullet4 = new EnemyBullet(boss->GetPoint().x + 300, boss->GetPoint().y + 230);
+					bossbullet0.AddTail(bullet0);
+					bossbullet1.AddTail(bullet1);
+					bossbullet2.AddTail(bullet2);
+					bossbullet3.AddTail(bullet3);
+					bossbullet4.AddTail(bullet4);
+				}
+				boss->bossBulletMove(&bossbullet0, -40, 30, &m_cacheDC);
+				boss->bossBulletMove(&bossbullet1, -20, 30, &m_cacheDC);
+				boss->bossBulletMove(&bossbullet2, 0, 30, &m_cacheDC);
+				boss->bossBulletMove(&bossbullet3, 20, 30, &m_cacheDC);
+				boss->bossBulletMove(&bossbullet4, 40, 30, &m_cacheDC);
+				break;
+			}
+			case 2:{
+				if (nIDEvent == 2)
+				{
+					EnemyBullet *bullet0 = new EnemyBullet(boss->GetPoint().x + 20, boss->GetPoint().y + 230);
+					EnemyBullet *bullet1 = new EnemyBullet(boss->GetPoint().x + 100, boss->GetPoint().y + 230);
+					EnemyBullet *bullet2 = new EnemyBullet(boss->GetPoint().x + 165, boss->GetPoint().y + 230);
+					EnemyBullet *bullet3 = new EnemyBullet(boss->GetPoint().x + 220, boss->GetPoint().y + 230);
+					EnemyBullet *bullet4 = new EnemyBullet(boss->GetPoint().x + 300, boss->GetPoint().y + 230);
+					bullet0->type = 1;
+					bullet1->type = 1;
+					bullet2->type = 1;
+					bullet3->type = 1;
+					bullet4->type = 1;
+					bossbullet0.AddTail(bullet0);
+					bossbullet1.AddTail(bullet1);
+					bossbullet2.AddTail(bullet2);
+					bossbullet3.AddTail(bullet3);
+					bossbullet4.AddTail(bullet4);
+				}
+				boss->bossBulletMove(&bossbullet0, -40, 30, &m_cacheDC);
+				boss->bossBulletMove(&bossbullet1, -20, 30, &m_cacheDC);
+				boss->bossBulletMove(&bossbullet2, 0, 30, &m_cacheDC);
+				boss->bossBulletMove(&bossbullet3, 20, 30, &m_cacheDC);
+				boss->bossBulletMove(&bossbullet4, 40, 30, &m_cacheDC);
+				break;
+			}
+			}
+		}
+		//碰撞检测
+		//boss移动
+		if (bossMove)
+		{
+			boss->SetPoint(boss->GetPoint().x + 10 * bossDirect, boss->GetPoint().y);
+			if (boss->GetPoint().x >= 800)
+				bossDirect = -1;
+			else if (boss->GetPoint().x <= 70)
+				bossDirect = 1;
+		}
+	}
 
 	cDC->BitBlt(0, 0, m_client.Width(), m_client.Height(), &m_cacheDC, 0, 0, SRCCOPY);//加入绘制的代码
 

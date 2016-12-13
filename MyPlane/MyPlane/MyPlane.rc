@@ -76,16 +76,18 @@ IDR_MAINFRAME           ICON                    "res\\MyPlane.ico"
 //
 
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
-IDB_BITMAP1             BITMAP                  "D:\\Github\\MFC-game\\image\\background3.bmp"
-IDB_BITMAP2             BITMAP                  "D:\\Github\\MFC-game\\image\\background3_2.bmp"
-IDB_BITMAP3             BITMAP                  "D:\\Github\\MFC-game\\image\\myplane1.bmp"
-IDB_BITMAP4             BITMAP                  "D:\\Github\\MFC-game\\image\\mybullet1.bmp"
-IDB_BITMAP5             BITMAP                  "D:\\Github\\MFC-game\\image\\mybullet2_30x30.bmp"
-IDB_BITMAP6             BITMAP                  "D:\\Github\\MFC-game\\image\\enemy1.bmp"
-IDB_BITMAP7             BITMAP                  "D:\\Github\\MFC-game\\image\\enemy2.bmp"
-IDB_BITMAP8             BITMAP                  "D:\\Github\\MFC-game\\image\\enemy3.bmp"
-IDB_BITMAP9             BITMAP                  "D:\\Github\\MFC-game\\image\\galaxy.bmp"
-IDB_BITMAP10            BITMAP                  "D:\\Github\\MFC-game\\image\\smallbullet.BMP"
+IDB_BITMAP1             BITMAP                  "image\\background3.bmp"
+IDB_BITMAP2             BITMAP                  "image\\background3_2.bmp"
+IDB_BITMAP3             BITMAP                  "image\\myplane1.bmp"
+IDB_BITMAP4             BITMAP                  "image\\mybullet1.bmp"
+IDB_BITMAP5             BITMAP                  "image\\mybullet2_30x30.bmp"
+IDB_BITMAP6             BITMAP                  "image\\enemy1.bmp"
+IDB_BITMAP7             BITMAP                  "image\\enemy2.bmp"
+IDB_BITMAP8             BITMAP                  "image\\enemy3.bmp"
+IDB_BITMAP9             BITMAP                  "image\\galaxy.bmp"
+IDB_BITMAP10            BITMAP                  "image\\smallbullet.BMP"
+IDB_BITMAP11            BITMAP                  "image\\boss1.bmp"
+IDB_BITMAP12            BITMAP                  "image\\boss_bullet.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //

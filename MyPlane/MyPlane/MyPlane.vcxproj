@@ -101,6 +101,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="ChildView.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBullet.h" />
@@ -110,11 +111,11 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="Scene.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="ChildView.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBullet.cpp" />
@@ -123,7 +124,6 @@
     <ClCompile Include="MyPlane.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Plane.cpp" />
-    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -146,6 +146,18 @@
     <Image Include="..\..\image\mybullet2_30x30.bmp" />
     <Image Include="..\..\image\myplane1.bmp" />
     <Image Include="..\..\image\smallbullet.BMP" />
+    <Image Include="image\background3.bmp" />
+    <Image Include="image\background3_2.bmp" />
+    <Image Include="image\boss1.bmp" />
+    <Image Include="image\boss_bullet.bmp" />
+    <Image Include="image\enemy1.bmp" />
+    <Image Include="image\enemy2.bmp" />
+    <Image Include="image\enemy3.bmp" />
+    <Image Include="image\galaxy.bmp" />
+    <Image Include="image\mybullet1.bmp" />
+    <Image Include="image\mybullet2_30x30.bmp" />
+    <Image Include="image\myplane1.bmp" />
+    <Image Include="image\smallbullet.BMP" />
     <Image Include="res\MyPlane.ico" />
     <Image Include="res\Toolbar.bmp" />
   </ItemGroup>

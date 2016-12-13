@@ -9,7 +9,7 @@
 #include"MyBullet.h"
 #include"Enemy.h"
 #include"EnemyBullet.h"
-#include"Scene.h"
+#include"Boss.h"
 
 // CChildView 窗口
 
@@ -28,17 +28,23 @@ public:
 
 	/*创建游戏对象*/
 	Plane *myPlane;
+	Boss *boss = NULL;
 
 	/*对象链表*/
 	CObList myBulletList;
 	CObList enemyList;
 	CObList enemyBulletList;
 
-	int mySpeed;
-	int enemySpeed;
-	int bulletSpeed;
+	CObList bossbullet0, bossbullet1, bossbullet2, bossbullet3, bossbullet4;
+
+	int Score = 0;
+	int life = 3;
 
 	BOOL start = TRUE;
+	BOOL bossMode = false;
+	BOOL bossMove = false;
+	int bossDirect;
+	int Stage = 0;
 
 // 操作
 public:

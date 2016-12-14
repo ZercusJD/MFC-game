@@ -133,6 +133,8 @@
     <ResourceCompile Include="MyPlane.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\mp31.bin" />
+    <None Include="res\mp32.bin" />
     <None Include="res\MyPlane.rc2" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +162,10 @@
     <Image Include="image\smallbullet.BMP" />
     <Image Include="res\MyPlane.ico" />
     <Image Include="res\Toolbar.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="music\bullet.wav" />
+    <Media Include="music\sound3.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

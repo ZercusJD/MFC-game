@@ -96,6 +96,12 @@
     <None Include="res\MyPlane.rc2">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="res\mp31.bin">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\mp32.bin">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\MyPlane.ico">
@@ -170,5 +176,13 @@
     <Image Include="image\boss_bullet.bmp">
       <Filter>资源文件</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="music\bullet.wav">
+      <Filter>资源文件</Filter>
+    </Media>
+    <Media Include="music\sound3.wav">
+      <Filter>资源文件</Filter>
+    </Media>
   </ItemGroup>
 </Project>

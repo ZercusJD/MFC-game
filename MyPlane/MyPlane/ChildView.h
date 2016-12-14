@@ -38,7 +38,8 @@ public:
 	CObList bossbullet0, bossbullet1, bossbullet2, bossbullet3, bossbullet4;
 
 	int Score = 0;
-	int life = 3;
+	int life = 50;
+	int pause = 0;
 
 	BOOL start = TRUE;
 	BOOL bossMode = false;

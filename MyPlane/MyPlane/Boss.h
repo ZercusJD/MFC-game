@@ -12,6 +12,8 @@ public:
 	BOOL Draw(CDC *pDC, BOOL bPause);
 	
 	void bossBulletMove(CObList *bulletList, int x, int y, CDC *pDC);
+	BOOL bossHitMe(CObList *bulletList, Plane *myPlane,int &life);
+	BOOL bossCrash(Plane *myPlane);
 	static BOOL LoadImageW();
 	int life;
 

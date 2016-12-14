@@ -36,6 +36,42 @@ void Boss::bossBulletMove(CObList *bulletList, int x, int y, CDC *pDC)
 	}
 }
 
+BOOL Boss::bossHitMe(CObList *bulletList, Plane *myPlane, int &life)
+{
+	POSITION pos = bulletList->GetHeadPosition();
+	while (pos != NULL)
+	{
+		POSITION tmp = pos;
+		EnemyBullet* bullet = (EnemyBullet*)bulletList->GetNext(pos);
+		CRect r1 = bullet->GetRect();
+		CRect r2 = myPlane->GetRect();
+		CRect t;
+		if (t.IntersectRect(&r1, &r2))
+		{
+			bulletList->RemoveAt(tmp);
+			//delete myPlane;
+			life--;
+			myPlane->SetPoint(1277 / 2 - myPlane->PLANE_WIDTH / 2, 719 - myPlane->PLANE_HEIGHT - 10);
+			break;
+		}
+	}
+	return TRUE;
+}
+
+BOOL Boss::bossCrash(Plane*myPlane)
+{
+	CRect r1 = GetRect();
+	CRect r2 = myPlane->GetRect();
+	CRect t;
+	if (t.IntersectRect(&r1, &r2))
+	{
+		//delete myPlane;
+		myPlane->SetPoint(1277 / 2 - myPlane->PLANE_WIDTH / 2, 719 - myPlane->PLANE_HEIGHT - 10);
+		return TRUE;
+	}
+	return FALSE;
+}
+
 Boss::~Boss()
 {
 }
